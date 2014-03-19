@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="mobile-menu" {{bind-attr class="controller.mobileMenuVisible:visible"}} {{action "toggleMobileMenu"}}>
+    <div class="mobile-menu-header">
+      <h3>Base App</h3>
+    </div>
+    <ul class="nav affix-top">
+      {{#link-to 'public' tagName="li" class="mobile-menu-text"}}
+        {{#link-to 'public'}}Public{{/link-to}}
+      {{/link-to}}
+      {{#link-to 'registered' tagName="li" class="mobile-menu-text"}}
+        {{#link-to 'registered'}}Registered User{{/link-to}}
+      {{/link-to}}
+      {{#link-to 'super' tagName="li" class="mobile-menu-text"}}
+        {{#link-to 'super'}}Super User{{/link-to}}
+      {{/link-to}}
+      <div class="mobile-menu-header">
+        {{#if hasToken}}
+          <h3>Logout</h3>
+        {{else}}
+          <h3>Login</h3>
+        {{/if}}
+      </div>
+      {{#with controllers.login}}
+        {{#if hasToken}}
+          {{#link-to 'changepass' tagName="li" class="mobile-menu-text"}}
+            {{#link-to 'changepass'}}Change Password{{/link-to}}
+          {{/link-to}}
+          {{#link-to 'index' tagName="li" class="mobile-menu-text"}}
+            <a href="#" {{action 'logout'}}>Logout</a>
+          {{/link-to}}
+        {{else}}
+        {{#link-to 'register' tagName="li" class="mobile-menu-text"}}
+          {{#link-to 'register'}}Register{{/link-to}}
+        {{/link-to}}
+        {{#link-to 'resetpass' tagName="li" class="mobile-menu-text"}}
+          {{#link-to 'resetpass'}}Lost Password?{{/link-to}}
+        {{/link-to}}
+        {{#link-to 'login' tagName="li" class="mobile-menu-text"}}
+          {{#link-to 'login'}}Login{{/link-to}}
+        {{/link-to}}
+        {{/if}}
+      {{/with}}
+    </ul>
+  </div><!-- /mobile-menu -->
+</div><!-- /container -->
+
+<div class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" onclick="this.blur(); return false;" class="navbar-toggle pull-left" {{action "toggleMobileMenu"}}>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class='nav navbar-nav nav-desktop'>
+        {{#link-to 'public' tagName="li"}}
+          {{#link-to 'public'}}Public{{/link-to}}
+        {{/link-to}}
+        {{#link-to 'registered' tagName="li"}}
+          {{#link-to 'registered'}}Registered User{{/link-to}}
+        {{/link-to}}
+        {{#link-to 'super' tagName="li"}}
+          {{#link-to 'super'}}Super User{{/link-to}}
+        {{/link-to}}
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+        {{#with controllers.login}}
+          {{#if hasToken}}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logout<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li>{{#link-to 'changepass'}}<i class="icon glyphicon glyphicon-refresh"></i> Change Password{{/link-to}}</li>
+              <li class="divider"></li>
+              <li><a href="#" {{action 'logout'}}><i class="icon glyphicon glyphicon-off"></i> Logout</a></li>
+            </ul>
+          {{else}}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li>{{#link-to 'register'}}<i class="icon glyphicon glyphicon-user"></i> Register{{/link-to}}</li>
+              <li>{{#link-to 'resetpass'}}<i class="icon glyphicon glyphicon-search"></i> Lost Password?{{/link-to}}</li>
+              <li class="divider"></li>
+              <li>{{#link-to 'login'}}<i class="icon glyphicon glyphicon-off"></i> Login{{/link-to}}</li>
+            </ul>
+          {{/if}}
+        {{/with}}
+        </li><!-- /dropdown -->
+      </ul>
+    </div><!-- /navbar-collapse -->
+  </div><!-- /container -->
+</div><!-- /navbar -->
+
+<div class="container">
+  {{outlet}}
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Overture App</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'overture/css/overture.min.css' %}">
+  </head>
+  <body>
+    <script src="{% static 'overture/js/lib/scripts.min.js' %}"></script>
+    <script>
+      $(document).ajaxSend(function(event, xhr, settings) {
+          if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+          }
+      });
+    </script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

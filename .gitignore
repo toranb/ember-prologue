@@ -1,0 +1,6 @@
+*.pyc
+.DS_Store
+db.sqlite3
+node_modules/*
+overture/static/overture/js/*
+!overture/static/overture/js/templates/

@@ -1,0 +1,7 @@
+django
+django-nose
+djangorestframework
+django-braces
+django-grappelli
+django-vanilla-views
+django-cors-headers

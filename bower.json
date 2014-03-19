@@ -1,0 +1,11 @@
+{
+  "name": "overture-placeholder",
+  "version": "0.0.1",
+  "dependencies": {
+    "ember": "~1.4",
+    "ember-data": "~1.0.0",
+    "jquery-mockjax": "*",
+    "jquery": "1.11.0",
+    "ember-data-django-rest-adapter": "*"
+  }
+}
