@@ -12,20 +12,19 @@ App.LoginController = Ember.ObjectController.extend
       errors: null
 
   loginSuccess: (response) ->
-    Ember.run =>
-      @reset()
-      #TODO Debugging <<---
-      console.log("The response #{response}")
-      console.log("The type #{typeof(response)}")
-      #/TODO Debugging <<---
-      @set('token', response.token)
-      @getCurrentUser()
-      attemptedTransition = @get('attemptedTransition')
-      if attemptedTransition
-        attemptedTransition.retry()
-        @setProperties(attemptedTransition: null)
-      else
-        @transitionToRoute('index')
+    @reset()
+    #TODO Debugging <<---
+    console.log("The token we get back: #{response.token}")
+    console.log("The type #{typeof(response)}")
+    #/TODO Debugging <<---
+    @set('token', response.token)
+    @getCurrentUser()
+    attemptedTransition = @get('attemptedTransition')
+    if attemptedTransition
+      attemptedTransition.retry()
+      @setProperties(attemptedTransition: null)
+    else
+      @transitionToRoute('index')
 
   loginError: (jqXHR, status, error) ->
     @set('errors', $.parseJSON(jqXHR.responseText))
@@ -51,14 +50,16 @@ App.LoginController = Ember.ObjectController.extend
 
   getCurrentUser: ->
     Ember.run =>
-      $.ajax
+      $.ajax(
         type: "GET"
         url: "/api/users/current_user"
         datatype: "json"
-        success: (response) =>
-          @getUserSuccess(response)
-        error: (jqXHR, status, error) =>
-          @getUserError(jqXHR, status, error)
+      ).done((response) =>
+            Ember.run =>
+              @getUserSuccess(response)
+      ).fail (jqXHR, status, error) =>
+          Ember.run =>
+            @getUserError(jqXHR, status, error)
 
   tokenChanged: (->
     localStorage.overtureProjectAuthToken = @get("token")
@@ -69,13 +70,15 @@ App.LoginController = Ember.ObjectController.extend
     login: ->
       data = @getProperties('username', 'password')
       Ember.run =>
-        $.ajax
+        $.ajax(
           type: "POST"
           url: "/api-token-auth/"
           data: data
           datatype: "json"
-          success: (response) =>
-            @loginSuccess(response)
-          error: (jqXHR, status, error) =>
-            @loginError(jqXHR, status, error)
+        ).done((response) =>
+            Ember.run =>
+              @loginSuccess(response)
+        ).fail (jqXHR, status, error) =>
+            Ember.run =>
+              @loginError(jqXHR, status, error)
 
