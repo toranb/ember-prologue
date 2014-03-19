@@ -6,6 +6,7 @@ module "Integration tests",
 test "New user can successfully login", ->
   tokenResponse = {token: "dcfe0537f11aa142d740217b18c13651b73866ec"}
   getUserResponse = {
+    id: 1,
     username: "jrock",
     first_name: "Jarrod",
     last_name: "Taylor",
@@ -19,6 +20,5 @@ test "New user can successfully login", ->
     fillIn("#login-password", "Password")
     click("#login-submit")
   andThen ->
-    visit "/"
-    console.log(localStorage)
-    equal(5, 4)
+    visit "/registered"
+    equal(find("h2").text(), "Hello jrock you have successfully signed in.")

@@ -53,7 +53,7 @@ App.LoginController = Ember.ObjectController.extend
       $.ajax(
         type: "GET"
         url: "/api/users/current_user"
-        datatype: "json"
+        dataType: "json"
       ).done((response) =>
             Ember.run =>
               @getUserSuccess(response)
@@ -74,9 +74,10 @@ App.LoginController = Ember.ObjectController.extend
           type: "POST"
           url: "/api-token-auth/"
           data: data
-          datatype: "json"
+          dataType: "json"
         ).done((response) =>
             Ember.run =>
+              console.log("The response #{response}")
               @loginSuccess(response)
         ).fail (jqXHR, status, error) =>
             Ember.run =>
