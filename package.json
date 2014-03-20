@@ -12,6 +12,7 @@
     "grunt-contrib-less": "*",
     "karma": "0.12.0",
     "karma-qunit": "*",
+    "karma-phantomjs-launcher": "*",
     "karma-qunit-special-blend": "*",
     "less": "*"
   },
