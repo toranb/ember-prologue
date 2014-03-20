@@ -6,40 +6,41 @@ App.LoginController = Ember.ObjectController.extend
   attemptedTransition: null
 
   reset: ->
-    @setProperties
-      username: null
-      password: null
-      errors: null
+    Ember.run =>
+      @setProperties
+        username: null
+        password: null
+        errors: null
 
   loginSuccess: (response) ->
-    @reset()
-    #TODO Debugging <<---
-    console.log("The token we get back: #{response.token}")
-    console.log("The type #{typeof(response)}")
-    #/TODO Debugging <<---
-    @set('token', response.token)
-    @getCurrentUser()
-    attemptedTransition = @get('attemptedTransition')
-    if attemptedTransition
-      attemptedTransition.retry()
-      @setProperties(attemptedTransition: null)
-    else
-      @transitionToRoute('index')
+    Ember.run =>
+      @reset()
+      @set('token', response.token)
+      @getCurrentUser()
+      attemptedTransition = @get('attemptedTransition')
+      if attemptedTransition
+        attemptedTransition.retry()
+        @setProperties(attemptedTransition: null)
+      else
+        @transitionToRoute('index')
 
   loginError: (jqXHR, status, error) ->
-    @set('errors', $.parseJSON(jqXHR.responseText))
+    Ember.run =>
+      @set('errors', $.parseJSON(jqXHR.responseText))
 
   hasToken: (->
-    token = @get("token")
-    tokenIsEmpty = Ember.isEmpty(token)
-    return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
+    Ember.run =>
+      token = @get("token")
+      tokenIsEmpty = Ember.isEmpty(token)
+      return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
   ).property('token')
 
   setupAjax: ->
-    token = @get("token")
-    $(document).ajaxSend (event, xhr, settings) =>
-      if @get("hasToken")
-        xhr.setRequestHeader("Authorization", "Token #{token}")
+    Ember.run =>
+      token = @get("token")
+      $(document).ajaxSend (event, xhr, settings) =>
+        if @get("hasToken")
+          xhr.setRequestHeader("Authorization", "Token #{token}")
 
   getUserSuccess: (response) ->
     Ember.run =>
@@ -49,17 +50,16 @@ App.LoginController = Ember.ObjectController.extend
     console.log(error)
 
   getCurrentUser: ->
-    Ember.run =>
-      $.ajax(
-        type: "GET"
-        url: "/api/users/current_user"
-        dataType: "json"
-      ).done((response) =>
-            Ember.run =>
-              @getUserSuccess(response)
-      ).fail (jqXHR, status, error) =>
-          Ember.run =>
-            @getUserError(jqXHR, status, error)
+    $.ajax(
+      type: "GET"
+      url: "/api/users/current_user"
+      dataType: "json"
+    ).done((response) =>
+      Ember.run =>
+        @getUserSuccess(response)
+    ).fail (jqXHR, status, error) =>
+      Ember.run =>
+        @getUserError(jqXHR, status, error)
 
   tokenChanged: (->
     localStorage.overtureProjectAuthToken = @get("token")
@@ -69,17 +69,15 @@ App.LoginController = Ember.ObjectController.extend
   actions:
     login: ->
       data = @getProperties('username', 'password')
-      Ember.run =>
-        $.ajax(
-          type: "POST"
-          url: "/api-token-auth/"
-          data: data
-          dataType: "json"
-        ).done((response) =>
-            Ember.run =>
-              console.log("The response #{response}")
-              @loginSuccess(response)
-        ).fail (jqXHR, status, error) =>
-            Ember.run =>
-              @loginError(jqXHR, status, error)
+      $.ajax(
+        type: "POST"
+        url: "/api-token-auth/"
+        data: data
+        dataType: "json"
+      ).done((response) =>
+        Ember.run =>
+          @loginSuccess(response)
+      ).fail (jqXHR, status, error) =>
+        Ember.run =>
+          @loginError(jqXHR, status, error)
 
