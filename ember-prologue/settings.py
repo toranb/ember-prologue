@@ -102,7 +102,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',  # optional
     ),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGINATE_BY': 10
+    # 'PAGINATE_BY': 10
 }
 
 CORS_ORIGIN_REGEX_WHITELIST = ('^https?://localhost:8000/api/users/')
