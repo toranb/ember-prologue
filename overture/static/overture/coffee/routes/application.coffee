@@ -8,6 +8,7 @@ App.ApplicationRoute = Ember.Route.extend
   actions:
     logout: ->
       @controllerFor("login").set("token", null)
+      localStorage.overtureProjectCurrentUserID = null
       if @controllerFor("application").get("mobileMenuVisible")
         @controllerFor("application").set("mobileMenuVisible", false)
         @controllerFor("application").pushBody()

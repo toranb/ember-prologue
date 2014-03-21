@@ -13,7 +13,7 @@ test "New user can successfully login", ->
     email: "jarrod.c.taylor@gmail.com"
   }
   mockAjaxResponse("POST", "/api-token-auth/", tokenResponse)
-  mockAjaxResponse("GET", "/api/users/current_user/", getUserResponse)
+  mockAjaxResponse("GET", "/api/users/current_user", getUserResponse)
   visit "/login"
   andThen ->
     fillIn("#login-username", "jrock")

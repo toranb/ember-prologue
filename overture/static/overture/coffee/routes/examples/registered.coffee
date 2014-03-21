@@ -1,3 +1,3 @@
 App.RegisteredRoute = App.AuthenticatedRoute.extend
   model: ->
-    return @store.find('user', "current_user")
+    return @store.find('user', localStorage.overtureProjectCurrentUserID)
