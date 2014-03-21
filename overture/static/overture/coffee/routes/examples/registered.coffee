@@ -1,4 +1,3 @@
 App.RegisteredRoute = App.AuthenticatedRoute.extend
   model: ->
-    return Ember.$.getJSON('/api/users/current_user')
-
+    return @store.find('user', "current_user")

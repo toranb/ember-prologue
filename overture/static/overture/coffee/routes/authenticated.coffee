@@ -4,12 +4,11 @@ App.AuthenticatedRoute = Ember.Route.extend
       @redirectToLogin(transition)
 
   redirectToLogin: (transition) ->
-      loginController = @controllerFor('login')
-      @controllerFor("login").set('attemptedTransition', transition)
-      @transitionTo('login')
+    loginController = @controllerFor('login')
+    @controllerFor("login").set('attemptedTransition', transition)
+    @transitionTo('login')
 
   actions:
     error: (error, transition) ->
       console.log("Error status: #{error.status}")
       @redirectToLogin(transition)
-

@@ -13,12 +13,13 @@ test "New user can successfully login", ->
     email: "jarrod.c.taylor@gmail.com"
   }
   mockAjaxResponse("POST", "/api-token-auth/", tokenResponse)
-  mockAjaxResponse("GET", "/api/users/current_user", getUserResponse)
+  mockAjaxResponse("GET", "/api/users/current_user/", getUserResponse)
   visit "/login"
   andThen ->
     fillIn("#login-username", "jrock")
     fillIn("#login-password", "Password")
     click("#login-submit")
+  visit "/registered"
   andThen ->
-    visit "/registered"
-    equal(find("h2").text(), "Hello jrock you have successfully signed in.")
+    equal(find("p").text(), "Hello jrock you have successfully signed in.")
+
