@@ -1,0 +1,10 @@
+.custom-gutter(@gutter-width: 10px) {
+    // Pass in the total desired gutter width for
+    // the div that this is being included in
+    // Ex .custom-gutter(20px);
+    [class*='col-']:not(:first-child),
+    [class*='col-']:not(:last-child) {
+        padding-right: @gutter-width / 2;
+        padding-left: @gutter-width / 2;
+    }
+}

@@ -28,6 +28,7 @@ module.exports = (grunt) ->
       build:
         files:
           "overture/static/overture/css/navbar.css": "overture/static/overture/less/navbar.less"
+          "overture/static/overture/css/authentication.css": "overture/static/overture/less/authentication.less"
           "overture/static/overture/css/overture.css": "overture/static/overture/less/overture.less"
 
     watch:
@@ -76,6 +77,7 @@ module.exports = (grunt) ->
       css:
         src: [
           "overture/static/overture/css/navbar.css"
+          "overture/static/overture/css/authentication.css"
           "overture/static/overture/css/overture.css"
         ]
         dest: "overture/static/overture/css/overture.min.css"

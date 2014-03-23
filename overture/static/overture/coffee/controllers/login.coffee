@@ -38,8 +38,8 @@ App.LoginController = Ember.ObjectController.extend
         localStorage.setItem("overtureProjectCurrentUserID", response.id)
         @store.push('user', response)
         @preformTransition()
-    ).fail (jqXHR, status, error) =>
-      Ember.run =>
+    ).fail (jqXHR, status, error) ->
+      Ember.run ->
         console.log(error)
 
   preformTransition: ->

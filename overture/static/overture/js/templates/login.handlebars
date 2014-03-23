@@ -1,17 +1,32 @@
-<form {{action 'login' on='submit'}}>
-  <div {{bind-attr class='errors.username:has-error'}}>
-    <span>{{errors.username}}</span>
-    {{input id="login-username" class="form-control" value=username type='text' placeholder='Username'}}
+<div class="container login-form-container">
+  <div class="row">
+    {{#if errors.non_field_errors}}
+      <div class="alert alert-danger col-xs-12">
+        {{errors.non_field_errors}}
+      </div>
+    {{/if}}
   </div>
-  <div {{bind-attr class='errors.password:has-error'}}>
-    <span>{{errors.password}}</span>
-    {{input id="login-password" class="form-control" value=password type='password' placeholder='Password'}}
-  </div>
-  {{input id="login-submit" class="btn btn-success" type='submit' value='Log in'}}
-</form>
 
-{{#if errors.non_field_errors}}
-  <div> 
-    <strong>Oh Snap!</strong> {{errors.non_field_errors}} 
-  </div>
-{{/if}}
+  <h2>Log In</h2>
+  <form {{action 'login' on='submit'}}>
+    <div class="input-wrapper">
+      <div class="row username-div ">
+        {{input id="login-username" class="form-control col-xs-12" value=username type='text' placeholder='Username'}}
+      </div><!-- /username-div -->
+      <div class="row password-div">
+        {{input id="login-password" class="form-control col-xs-12" value=password type='password' placeholder='Password'}}
+      </div><!-- /row -->
+    </div><!-- /login-input-wrapper -->
+    <div class="row">
+      <div class="submit-div col-sm-12">
+        {{input id="login-submit-btn" class="btn btn-lg btn-success col-xs-12" type='submit' value='Log in'}}
+      </div>
+      <div class="col-sm-6">
+        {{#link-to 'register' id="login-register-btn" class="btn btn-lg btn-default col-xs-12"}}Register{{/link-to}}
+      </div>
+      <div class="col-sm-6">
+        {{#link-to 'resetpass' id="login-resetpass-btn" class="btn btn-lg btn-default col-xs-12"}}Forgot Password{{/link-to}}
+      </div>
+    </div><!-- /row -->
+  </form>
+</div>
