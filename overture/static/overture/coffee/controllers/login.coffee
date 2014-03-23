@@ -1,5 +1,4 @@
 App.LoginController = Ember.ObjectController.extend
-  id: null
   username: null
   password: null
   token: null
@@ -22,18 +21,12 @@ App.LoginController = Ember.ObjectController.extend
         dataType: "json"
       ).done((response) =>
         Ember.run =>
-          @loginSuccess(response)
+          @reset()
+          @set('token', response.token)
+          @getCurrentUser()
       ).fail (jqXHR, status, error) =>
         Ember.run =>
-          @loginError(jqXHR, status, error)
-
-  loginSuccess: (response) ->
-    @reset()
-    @set('token', response.token)
-    @getCurrentUser()
-
-  loginError: (jqXHR, status, error) ->
-    @set('errors', $.parseJSON(jqXHR.responseText))
+          @set('errors', $.parseJSON(jqXHR.responseText))
 
   getCurrentUser: ->
     $.ajax(
@@ -42,19 +35,12 @@ App.LoginController = Ember.ObjectController.extend
       dataType: "json"
     ).done((response) =>
       Ember.run =>
-        @getUserSuccess(response)
+        localStorage.setItem("overtureProjectCurrentUserID", response.id)
+        @store.push('user', response)
+        @preformTransition()
     ).fail (jqXHR, status, error) =>
       Ember.run =>
-        @getUserError(jqXHR, status, error)
-
-  getUserSuccess: (response) ->
-    localStorage.setItem("overtureProjectCurrentUserID", response.id)
-    @set('id', response.id)
-    @store.push('user', response)
-    @preformTransition()
-
-  getUserError: (jqXHR, status, error) ->
-    console.log(error)
+        console.log(error)
 
   preformTransition: ->
     attemptedTransition = @get('attemptedTransition')
@@ -63,12 +49,6 @@ App.LoginController = Ember.ObjectController.extend
       @setProperties(attemptedTransition: null)
     else
       @transitionToRoute('index')
-
-  hasToken: (->
-    token = @get("token")
-    tokenIsEmpty = Ember.isEmpty(token)
-    return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
-  ).property('token')
 
   tokenChanged: (->
     localStorage.overtureProjectAuthToken = @get("token")
@@ -81,3 +61,8 @@ App.LoginController = Ember.ObjectController.extend
       if @get("hasToken")
         xhr.setRequestHeader("Authorization", "Token #{token}")
 
+  hasToken: (->
+    token = @get("token")
+    tokenIsEmpty = Ember.isEmpty(token)
+    return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
+  ).property('token')
