@@ -29,7 +29,7 @@ class TokenAuthenticationTest(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(expected_response, response.content)
 
-    def test_user_with_invalid_username_and_valid_password_does_not_get_auth_token_y(self):
+    def test_user_with_invalid_username_and_valid_password_does_not_get_auth_token(self):
         response = self.client.post("/api-token-auth/", {'username': 'jrock1', 'password': 'password'})
         expected_response = '{"non_field_errors": ["Unable to login with provided credentials."]}'
         self.assertEqual(response.status_code, 400)

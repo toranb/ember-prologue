@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from users.models import User
-from users.api.permissions import IsStaffOrTargetUser
+from users.api.permissions import IsSuperOrTargetUser
 from users.api.serializers import UserSerializer
 
 
@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         """Allow non-authenticated user to create via POST"""
-        return (AllowAny() if self.request.method == 'POST' else IsStaffOrTargetUser()),
+        return (AllowAny() if self.request.method == 'POST' else IsSuperOrTargetUser()),
 
     def retrieve(self, request, pk=None):
         """If provided 'pk' is "current_user" return the current user."""

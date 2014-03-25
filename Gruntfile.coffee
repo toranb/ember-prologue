@@ -20,6 +20,8 @@ module.exports = (grunt) ->
             'overture/static/overture/coffee/routes/examples/super.coffee'
             'overture/static/overture/coffee/controllers/application.coffee'
             'overture/static/overture/coffee/controllers/login.coffee'
+            'overture/static/overture/coffee/controllers/register.coffee'
+            'overture/static/overture/coffee/views/register.coffee'
             'overture/static/overture/coffee/models/models.coffee'
           ]
           'overture/static/overture/js/tests/tests.min.js': 'overture/static/overture/coffee/tests/*.coffee'

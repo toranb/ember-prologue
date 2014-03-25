@@ -1,1 +1,28 @@
-<h1>Comming Soon</h1>
+<div class='container registration-form-container'>
+  {{#if errors}}
+    {{#if errors.username}}
+      <div class='alert alert-danger registration-username-error'>
+        <strong>Username:</strong> {{errors.username}}
+      </div>
+    {{/if}}
+    {{#if errors.password}}
+      <div class='alert alert-danger registration-password-error'>
+        <strong>Password:</strong> {{errors.password}}
+      </div>
+    {{/if}}
+  {{/if}}
+
+  <h2>Register</h2>
+  <form {{action 'createUser' on='submit'}}>
+    {{input id='register-username' class='form-control' value=username type='text' placeholder='Username'}}
+    {{input id='register-first_name' class='form-control' value=first_name type='text' placeholder='First Name'}}
+    {{input id='register-last_name' class='form-control' value=last_name type='text' placeholder='Last Name'}}
+    {{input id='register-email' class='form-control' value=email type='email' placeholder='Email'}}
+    {{input id='register-password' class='form-control' value=password type='password' placeholder='Password'}}
+    <span {{bind-attr class="passwordError:has-error"}}>
+      {{view App.PasswordConfirmField id="register-password2" class='form-control' value=password2 type='password' placeholder='Re-Enter Password'}}
+      <span id="register-password-error" {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
+    </span>
+    {{input id='register-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Register'}}
+  </form>
+</div>
