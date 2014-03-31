@@ -7,7 +7,7 @@ from rest_framework.test import APIClient
 from users.models import User
 
 
-class Test(TestCase):
+class UsersEndPointGetTest(TestCase):
 
     def setUp(self):
         User.objects.create_user(username='jrock', password='password', email="jrock@winning.com")
@@ -60,17 +60,20 @@ class UsersEndPointPostTest(TestCase):
 
     def test_non_logged_user_can_register_a_new_user(self):
         self.assertEqual(0, len(User.objects.all()))
-        response = self.client.post("/api/users/", data={"username": "jrock", "first_name": "", "last_name": "", "email": "j@rock.com", "password": "pass"})
+        data = {"username": "jrock", "first_name": "", "last_name": "", "email": "j@rock.com", "password": "pass"}
+        response = self.client.post("/api/users/", data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(1, len(User.objects.all()))
 
     def test_cannot_create_user_with_an_existing_username(self):
-        self.client.post("/api/users/", data={"username": "jrock", "first_name": "", "last_name": "", "email": "j@rock.com", "password": "pass"})
-        response = self.client.post("/api/users/", data={"username": "jrock", "first_name": "", "last_name": "", "email": "j2@rock.com", "password": "pass"})
+        data = {"username": "jrock", "first_name": "", "last_name": "", "email": "j@rock.com", "password": "pass"}
+        self.client.post("/api/users/", data)
+        response = self.client.post("/api/users/", data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual('{"username": ["User with this Username already exists."]}', response.content)
 
     def test_error_returned_when_no_password_is_provided_in_an_attempt_to_register(self):
-        response = self.client.post("/api/users/", data={"username": "jrock", "first_name": "", "last_name": "", "email": "j2@rock.com"})
+        data = {"username": "jrock", "first_name": "", "last_name": "", "email": "j2@rock.com"}
+        response = self.client.post("/api/users/", data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual('{"password": ["This field is required."]}', response.content)

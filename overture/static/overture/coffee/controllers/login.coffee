@@ -26,6 +26,7 @@ App.LoginController = Ember.ObjectController.extend
           @getCurrentUser()
       ).fail (jqXHR, status, error) =>
         Ember.run =>
+          @reset()
           @set('errors', $.parseJSON(jqXHR.responseText))
 
   getCurrentUser: ->

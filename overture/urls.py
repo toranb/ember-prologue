@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from  overture import views
+from overture import views
 
 urlpatterns = patterns(
     "",

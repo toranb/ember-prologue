@@ -13,4 +13,3 @@ App.ApplicationRoute = Ember.Route.extend
         @controllerFor("application").set("mobileMenuVisible", false)
         @controllerFor("application").pushBody()
       @transitionTo("index")
-

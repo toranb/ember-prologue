@@ -17,5 +17,8 @@ urlpatterns = patterns(
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r'^', include('overture.urls', namespace='overture')),
-    url(r'^api/', include(router.urls))
+    # api/users managed by UserViewSet
+    url(r'^api/', include(router.urls)),
+    # api/account manages password change and password recovery
+    url(r'^api/account/', include('users.urls', namespace='account')),
 )
