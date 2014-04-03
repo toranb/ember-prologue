@@ -1,5 +1,6 @@
 App.RegisterView = Ember.View.extend
   templateName: 'register'
+  classNames: ['container','registration-form-container']
 
 App.PasswordConfirmField = Ember.TextField.extend
   keyUp: (event) ->

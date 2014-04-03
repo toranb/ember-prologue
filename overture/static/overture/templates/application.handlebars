@@ -22,8 +22,8 @@
       </div>
       {{#with controllers.login}}
         {{#if hasToken}}
-          {{#link-to 'changepass' tagName="li" class="mobile-menu-text"}}
-            {{#link-to 'changepass'}}Change Password{{/link-to}}
+          {{#link-to 'changePass' tagName="li" class="mobile-menu-text"}}
+            {{#link-to 'changePass'}}Change Password{{/link-to}}
           {{/link-to}}
           {{#link-to 'index' tagName="li" class="mobile-menu-text"}}
             <a href="#" {{action 'logout'}}>Logout</a>
@@ -32,8 +32,8 @@
         {{#link-to 'register' tagName="li" class="mobile-menu-text"}}
           {{#link-to 'register'}}Register{{/link-to}}
         {{/link-to}}
-        {{#link-to 'resetpass' tagName="li" class="mobile-menu-text"}}
-          {{#link-to 'resetpass'}}Lost Password?{{/link-to}}
+        {{#link-to 'resetPass' tagName="li" class="mobile-menu-text"}}
+          {{#link-to 'resetPass'}}Lost Password?{{/link-to}}
         {{/link-to}}
         {{#link-to 'login' tagName="li" class="mobile-menu-text"}}
           {{#link-to 'login'}}Login{{/link-to}}
@@ -72,7 +72,7 @@
           {{#if hasToken}}
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logout<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li>{{#link-to 'changepass'}}<i class="icon glyphicon glyphicon-refresh"></i> Change Password{{/link-to}}</li>
+              <li>{{#link-to 'changePass'}}<i class="icon glyphicon glyphicon-refresh"></i> Change Password{{/link-to}}</li>
               <li class="divider"></li>
               <li><a href="#" {{action 'logout'}}><i class="icon glyphicon glyphicon-off"></i> Logout</a></li>
             </ul>
@@ -80,7 +80,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li>{{#link-to 'register'}}<i class="icon glyphicon glyphicon-user"></i> Register{{/link-to}}</li>
-              <li>{{#link-to 'resetpass'}}<i class="icon glyphicon glyphicon-search"></i> Lost Password?{{/link-to}}</li>
+              <li>{{#link-to 'resetPass'}}<i class="icon glyphicon glyphicon-search"></i> Lost Password?{{/link-to}}</li>
               <li class="divider"></li>
               <li>{{#link-to 'login'}}<i class="icon glyphicon glyphicon-off"></i> Login{{/link-to}}</li>
             </ul>

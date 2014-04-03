@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_nose',
     'rest_framework',
     'rest_framework.authtoken',
@@ -62,7 +62,6 @@ ROOT_URLCONF = 'ember-prologue.urls'
 
 WSGI_APPLICATION = 'ember-prologue.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
@@ -77,15 +76,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
@@ -102,7 +96,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',  # optional
     ),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    # 'PAGINATE_BY': 10
 }
 
 CORS_ORIGIN_REGEX_WHITELIST = ('^https?://localhost:8000/api/users/')
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'INSERT-EMAIL-ADDRESS'
+EMAIL_HOST_PASSWORD = 'INSERT-EMAIL-PASSWORD'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+SITE_ID = 1

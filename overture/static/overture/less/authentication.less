@@ -1,28 +1,25 @@
 @import "general-purpose-mixins";
 
-.login-form-container {
+/* -- Local style sheet mixins -- */
+.auth-form-base {
     max-width: 450px;
     margin-top: 60px;
+    input {
+        font-size: 18px;
+        height: 45px;
+        margin-bottom: 10px;
+    }
+    .password-error {
+        margin-top: -10px;
+    }
+}
+
+/* -- Auth forms -- */
+.login-form-container {
+    .auth-form-base;
     .input-wrapper {
         padding-left: 5px;
         padding-right: 5px;
-    }
-    .username-div {
-        margin-bottom: 10px;
-    }
-    .password-div {
-        margin-bottom: 10px;
-    }
-    #login-username {
-        font-size: 18px;
-        height: 45px;
-    }
-    #login-password {
-        font-size: 18px;
-        height: 45px;
-    }
-    #login-submit-btn {
-        margin-bottom: 10px;
     }
     #login-register-btn {
         margin-bottom: 10px;
@@ -31,27 +28,17 @@
 }
 
 .registration-form-container {
-    max-width: 450px;
-    margin-top: 60px;
-    input {
-        font-size: 18px;
-        height: 45px;
-        margin-bottom: 10px;
-    }
-    .password-error {
-        margin-top: -10px;
-    }
+    .auth-form-base;
 }
 
 .change-password-form-container {
-    max-width: 450px;
-    margin-top: 60px;
-    input {
-        font-size: 18px;
-        height: 45px;
-        margin-bottom: 10px;
-    }
-    .password-error {
-        margin-top: -10px;
-    }
+    .auth-form-base;
+}
+
+.resetpass-form-container {
+    .auth-form-base
+}
+
+.resetpassconfirm-form-container {
+    .auth-form-base
 }

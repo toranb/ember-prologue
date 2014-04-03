@@ -3,4 +3,4 @@
 db.sqlite3
 node_modules/*
 overture/static/overture/js/*
-!overture/static/overture/js/templates/
+overture/static/overture/css/*

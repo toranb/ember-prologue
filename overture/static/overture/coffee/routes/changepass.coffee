@@ -1,4 +1,4 @@
-App.ChangepassRoute = Ember.Route.extend
+App.ChangePassRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @._super(controller, model)
-    @controllerFor('changepass').resetVars()
+    @controllerFor('changePass').resetVars()

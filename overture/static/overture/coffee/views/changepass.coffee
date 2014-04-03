@@ -1,5 +1,5 @@
-App.ChangepassView = Ember.View.extend
-  templateName: 'changepass'
+App.ChangePassView = Ember.View.extend
+  templateName: 'changePass'
   classNames: ['container', 'change-password-form-container']
 
 App.ChangePasswordConfirmField = Ember.TextField.extend

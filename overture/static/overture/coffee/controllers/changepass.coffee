@@ -1,4 +1,4 @@
-App.ChangepassController = Ember.ObjectController.extend
+App.ChangePassController = Ember.ObjectController.extend
   current_password: null
   password1: null
   password2: null

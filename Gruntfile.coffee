@@ -13,19 +13,11 @@ module.exports = (grunt) ->
         files:
           'overture/static/overture/js/app.min.js': [
             'overture/static/overture/coffee/app.coffee'
-            'overture/static/overture/coffee/routes/router.coffee'
-            'overture/static/overture/coffee/routes/application.coffee'
-            'overture/static/overture/coffee/routes/authenticated.coffee'
-            'overture/static/overture/coffee/routes/changepass.coffee'
-            'overture/static/overture/coffee/routes/examples/registered.coffee'
-            'overture/static/overture/coffee/routes/examples/super.coffee'
-            'overture/static/overture/coffee/controllers/application.coffee'
-            'overture/static/overture/coffee/controllers/login.coffee'
-            'overture/static/overture/coffee/controllers/register.coffee'
-            'overture/static/overture/coffee/controllers/changepass.coffee'
-            'overture/static/overture/coffee/views/register.coffee'
-            'overture/static/overture/coffee/views/changepass.coffee'
-            'overture/static/overture/coffee/models/models.coffee'
+            'overture/static/overture/coffee/routes/*.coffee'
+            'overture/static/overture/coffee/routes/examples/*.coffee'
+            'overture/static/overture/coffee/controllers/*.coffee'
+            'overture/static/overture/coffee/views/*.coffee'
+            'overture/static/overture/coffee/models/*.coffee'
           ]
           'overture/static/overture/js/tests/tests.min.js': 'overture/static/overture/coffee/tests/*.coffee'
 
@@ -43,7 +35,7 @@ module.exports = (grunt) ->
       sources:
         files: [
           "overture/static/overture/css/*.less"
-          "overture/static/overture/js/templates/*.handlebars"
+          "overture/static/overture/templates/*.handlebars"
           "overture/static/overture/coffee/*.coffee"
         ]
         tasks: ["build"]
@@ -91,10 +83,10 @@ module.exports = (grunt) ->
       compile:
         options:
           templateName: (sourceFile) ->
-            newSource = sourceFile.replace("overture/static/overture/js/templates/", "")
+            newSource = sourceFile.replace("overture/static/overture/templates/", "")
             newSource.replace ".handlebars", ""
 
-        files: ["overture/static/overture/js/templates/*.handlebars"]
+        files: ["overture/static/overture/templates/*.handlebars"]
         dest: "overture/static/overture/js/lib/templates.min.js"
 
   grunt.task.registerTask("build", ["coffee", "emberhandlebars", "less:build", "concat:dist", "concat:css"])

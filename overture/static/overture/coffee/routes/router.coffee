@@ -4,6 +4,6 @@ App.Router.map ->
   @route("registered", {path: "/registered"})
   @route("super", {path: "/super"})
   @route("register", {path: "/register"})
-  @route("resetpass", {path: "/resetpass"})
-  @route("changepass", {path: "/changepass"})
-
+  @route("resetPass", {path: "/resetpass"})
+  @route("resetPassConfirm", {path: "/resetpassconfirm/:reset_key"})
+  @route("changePass", {path: "/changepass"})

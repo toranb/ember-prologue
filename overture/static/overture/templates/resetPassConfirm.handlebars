@@ -1,0 +1,30 @@
+{{#if errors}}
+  <h3>Errors:</h3>
+  {{#if errors.password1}}
+    <div class="alert alert-danger">
+      {{errors.password1}}
+    </div>
+  {{/if}}
+  {{#if errors.password2}}
+    <div class="alert alert-danger">
+      {{errors.password2}}
+    </div>
+  {{/if}}
+  {{#if errors.detail}}
+    <div class="alert alert-danger">
+      {{errors.detail}}
+    </div>
+  {{/if}}
+{{/if}}
+{{#if success}}
+  <div class="alert alert-info">
+    {{success}}
+  </div>
+{{/if}}
+
+<h2>Request Password Reset</h2>
+<form {{action 'resetConfrim' on='submit'}}>
+  {{input id='resetpassconfirm-password1' class='form-control' value=password1 type='password' placeholder='New Password'}}
+  {{input id='resetpassconfirm-password2' class='form-control' value=password2 type='password' placeholder='New Password (Confirm)'}}
+  {{input id='resetpassconfirm-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Submit'}}
+</form>
