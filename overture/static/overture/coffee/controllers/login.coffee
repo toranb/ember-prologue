@@ -2,14 +2,14 @@ App.LoginController = Ember.ObjectController.extend
   username: null
   password: null
   token: null
-  errors: null
+  errors: []
   attemptedTransition: null
 
   reset: ->
     @setProperties
       username: null
       password: null
-      errors: null
+      errors: []
 
   actions:
     login: ->
@@ -27,7 +27,9 @@ App.LoginController = Ember.ObjectController.extend
       ).fail (jqXHR, status, error) =>
         Ember.run =>
           @reset()
-          @set('errors', $.parseJSON(jqXHR.responseText))
+          theErrors = $.parseJSON(jqXHR.responseText)
+          for key, value of theErrors
+            @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 
   getCurrentUser: ->
     $.ajax(

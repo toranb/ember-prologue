@@ -28,4 +28,4 @@ test "Error message is displayed after a unsuccessful login attempt", ->
     click("#login-submit-btn")
   andThen ->
     errorMessage = find(".alert").text().trim()
-    equal(errorMessage, "Unable to login with provided credentials.")
+    equal(errorMessage, "Non_field_errors: Unable to login with provided credentials.")

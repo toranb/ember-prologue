@@ -1,21 +1,10 @@
-{{#if errors}}
+{{#each error in errors}}
   <h3>Errors:</h3>
-  {{#if errors.password1}}
-    <div class="alert alert-danger">
-      {{errors.password1}}
-    </div>
-  {{/if}}
-  {{#if errors.password2}}
-    <div class="alert alert-danger">
-      {{errors.password2}}
-    </div>
-  {{/if}}
-  {{#if errors.detail}}
-    <div class="alert alert-danger">
-      {{errors.detail}}
-    </div>
-  {{/if}}
-{{/if}}
+  <div class="alert alert-danger">
+    {{error}}
+  </div>
+{{/each}}
+
 {{#if success}}
   <div class="alert alert-info">
     {{success}}

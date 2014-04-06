@@ -1,32 +1,31 @@
-<div class="container login-form-container">
+{{#each error in errors}}
   <div class="row">
-    {{#if errors.non_field_errors}}
-      <div class="alert alert-danger col-xs-12">
-        {{errors.non_field_errors}}
-      </div>
-    {{/if}}
+    <h3>Errors:</h3>
+    <div class="alert alert-danger">
+      {{error}}
+    </div>
   </div>
+{{/each}}
 
-  <h2>Log In</h2>
-  <form {{action 'login' on='submit'}}>
-    <div class="input-wrapper">
-      <div class="row username-div ">
-        {{input id="login-username" class="form-control col-xs-12" value=username type='text' placeholder='Username'}}
-      </div>
-      <div class="row password-div">
-        {{input id="login-password" class="form-control col-xs-12" value=password type='password' placeholder='Password'}}
-      </div>
-    </div><!-- /login-input-wrapper -->
-    <div class="row">
-      <div class="submit-div col-sm-12">
-        {{input id="login-submit-btn" class="btn btn-lg btn-success col-xs-12" type='submit' value='Log in'}}
-      </div>
-      <div class="col-sm-6">
-        {{#link-to 'register' id="login-register-btn" class="btn btn-lg btn-default col-xs-12"}}Register{{/link-to}}
-      </div>
-      <div class="col-sm-6">
-        {{#link-to 'resetPass' id="login-resetpass-btn" class="btn btn-lg btn-default col-xs-12"}}Forgot Password{{/link-to}}
-      </div>
-    </div><!-- /row -->
-  </form>
-</div>
+<h2>Log In</h2>
+<form {{action 'login' on='submit'}}>
+  <div class="input-wrapper">
+    <div class="row username-div ">
+      {{input id="login-username" class="form-control col-xs-12" value=username type='text' placeholder='Username'}}
+    </div>
+    <div class="row password-div">
+      {{input id="login-password" class="form-control col-xs-12" value=password type='password' placeholder='Password'}}
+    </div>
+  </div><!-- /login-input-wrapper -->
+  <div class="row">
+    <div class="submit-div col-sm-12">
+      {{input id="login-submit-btn" class="btn btn-lg btn-success col-xs-12" type='submit' value='Log in'}}
+    </div>
+    <div class="col-sm-6">
+      {{#link-to 'register' id="login-register-btn" class="btn btn-lg btn-default col-xs-12"}}Register{{/link-to}}
+    </div>
+    <div class="col-sm-6">
+      {{#link-to 'resetPass' id="login-resetpass-btn" class="btn btn-lg btn-default col-xs-12"}}Forgot Password{{/link-to}}
+    </div>
+  </div><!-- /row -->
+</form>

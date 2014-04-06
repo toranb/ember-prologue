@@ -2,7 +2,7 @@ App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfi
   password1: null
   password2: null
   key: null
-  errors: null
+  errors: []
   success: null
 
   resetVars: ->
@@ -10,7 +10,7 @@ App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfi
       password1: null
       password2: null
       key: null
-      errors: null
+      errors: []
       success: null
 
   actions:
@@ -28,5 +28,7 @@ App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfi
       ).fail (jqXHR, status, error) =>
         Ember.run =>
           @resetVars()
-          @set('errors', $.parseJSON(jqXHR.responseText))
+          theErrors = $.parseJSON(jqXHR.responseText)
+          for key, value of theErrors
+            @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )

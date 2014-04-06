@@ -2,7 +2,7 @@ App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixi
   current_password: null
   password1: null
   password2: null
-  errors: null
+  errors: []
   success: null
 
   resetVars: ->
@@ -11,7 +11,7 @@ App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixi
       password1: null
       password2: null
       passwordError: null
-      errors: null
+      errors: []
       success: null
 
   actions:
@@ -29,5 +29,7 @@ App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixi
       ).fail (jqXHR, status, error) =>
         Ember.run =>
           @resetVars()
-          @set('errors', $.parseJSON(jqXHR.responseText))
+          theErrors = $.parseJSON(jqXHR.responseText)
+          for key, value of theErrors
+            @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )

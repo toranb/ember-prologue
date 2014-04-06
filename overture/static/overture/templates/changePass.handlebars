@@ -1,16 +1,10 @@
-{{#if errors}}
-  <h3>Errors:</h3>
-  {{#if errors.current_password}}
-    <div class="alert alert-danger">
-      {{errors.current_password}}
-    </div>
-  {{/if}}
-  {{#if errors.password2}}
-    <div class="alert alert-danger">
-      {{errors.password2}}
-    </div>
-  {{/if}}
-{{/if}}
+{{#each error in errors}}
+  <h2>Errors:</h2>
+  <div class="alert alert-danger">
+    {{error}}
+  </div>
+{{/each}}
+
 {{#if success}}
   <div class="alert alert-info">
     {{success}}
@@ -24,5 +18,5 @@
     {{view App.PasswordConfirmField id="change-pass-new-password2" class='form-control' value=password2 type='password' placeholder='Re-Enter New Password'}}
     <span {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
   </span>
-  {{input id='register-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Update Password'}}
+  {{input id='changepass-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Update Password'}}
 </form>

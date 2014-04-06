@@ -1,20 +1,10 @@
-{{#if errors}}
-  {{#if errors.username}}
-    <div class='alert alert-danger registration-username-error'>
-      <strong>Username:</strong> {{errors.username}}
-    </div>
-  {{/if}}
-  {{#if errors.password}}
-    <div class='alert alert-danger registration-password-error'>
-      <strong>Password:</strong> {{errors.password}}
-    </div>
-  {{/if}}
-  {{#if errors.detail}}
-    <div class='alert alert-danger registration-password-error'>
-      {{errors.detail}}
-    </div>
-  {{/if}}
-{{/if}}
+{{#each error in errors}}
+  <h3>Errors:</h3>
+  <div class="alert alert-danger">
+    {{error}}
+  </div>
+{{/each}}
+
 {{#if success}}
   <div class="alert alert-info">
     {{success}}

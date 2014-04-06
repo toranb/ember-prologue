@@ -19,20 +19,26 @@ test "No error is shown when passwords do match on registration screen", ->
     find("#register-password").attr("value", "Password").keyup()
     find("#register-password2").attr("value", "Password").keyup()
     find("#register-password2").keyup()
-    password = find("#register-password")
-    password2 = find("#register-password2")
     errorMessage = find(".password-error").text().trim()
     equal(errorMessage, "")
 
-test "Trying to register a user with an already existing password displays an error on registration screen", ->
+test "Trying to register a user with an already existing username displays an error on registration screen", ->
   mockAjaxResponse("POST", "/api/users/", {username: ["User with this Username already exists."]}, 400)
   visit "/register"
   andThen ->
     click("#register-submit-btn")
   andThen ->
-    missing(".registration-password-error")
-    errorMessage = find(".registration-username-error").text().trim()
+    errorMessage = find(".alert-danger").text().trim()
     equal(errorMessage, "Username: User with this Username already exists.")
+
+test "Trying to register a user with an already existing email address displays an error on registration screen", ->
+  mockAjaxResponse("POST", "/api/users/", {detail: ["That email address is already registered"]}, 400)
+  visit "/register"
+  andThen ->
+    click("#register-submit-btn")
+  andThen ->
+    errorMessage = find(".alert-danger").text().trim()
+    equal(errorMessage, "Detail: That email address is already registered")
 
 test "Trying to register a user with no password displays an error on registration screen", ->
   mockAjaxResponse("POST", "/api/users/", {password: ["This field is required."]}, 400)
@@ -40,6 +46,5 @@ test "Trying to register a user with no password displays an error on registrati
   andThen ->
     click("#register-submit-btn")
   andThen ->
-    missing(".registration-username-error")
-    errorMessage = find(".registration-password-error").text().trim()
+    errorMessage = find(".alert-danger").text().trim()
     equal(errorMessage, "Password: This field is required.")
