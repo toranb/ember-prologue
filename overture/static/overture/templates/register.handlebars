@@ -15,6 +15,11 @@
     </div>
   {{/if}}
 {{/if}}
+{{#if success}}
+  <div class="alert alert-info">
+    {{success}}
+  </div>
+{{/if}}
 
 <h2>Register</h2>
 <form {{action 'createUser' on='submit'}}>
@@ -25,7 +30,7 @@
   {{input id='register-password' class='form-control' value=password type='password' placeholder='Password'}}
   <span {{bind-attr class="passwordError:has-error"}}>
     {{view App.PasswordConfirmField id="register-password2" class='form-control' value=password2 type='password' placeholder='Re-Enter Password'}}
-    <span id="register-password-error" {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
+    <span {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
   </span>
   {{input id='register-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Register'}}
 </form>

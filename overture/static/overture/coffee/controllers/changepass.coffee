@@ -1,8 +1,7 @@
-App.ChangePassController = Ember.ObjectController.extend
+App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
   current_password: null
   password1: null
   password2: null
-  passwordError: null
   errors: null
   success: null
 
@@ -14,17 +13,6 @@ App.ChangePassController = Ember.ObjectController.extend
       passwordError: null
       errors: null
       success: null
-
-  getValue: (formField) ->
-    passwordValue = @get('password1')
-    password2Value = @get(formField)
-    if passwordValue != password2Value
-      @set('passwordError', 'Passwords do not match.')
-    else
-      @set('passwordError', '')
-
-  validatePassword: ->
-    @getValue('password2')
 
   actions:
     changePass: ->
@@ -42,3 +30,4 @@ App.ChangePassController = Ember.ObjectController.extend
         Ember.run =>
           @resetVars()
           @set('errors', $.parseJSON(jqXHR.responseText))
+)

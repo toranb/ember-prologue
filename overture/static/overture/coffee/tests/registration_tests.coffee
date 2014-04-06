@@ -10,7 +10,7 @@ test "Error is shown while passwords do not match on registration screen", ->
     find("#register-password").attr("value", "Password").keyup()
     find("#register-password2").attr("value", "Passw").keyup()
     find("#register-password2").keyup()
-    errorMessage = find("#register-password-error").text().trim()
+    errorMessage = find(".password-error").text().trim()
     equal(errorMessage, "Passwords do not match.")
 
 test "No error is shown when passwords do match on registration screen", ->
@@ -21,7 +21,7 @@ test "No error is shown when passwords do match on registration screen", ->
     find("#register-password2").keyup()
     password = find("#register-password")
     password2 = find("#register-password2")
-    errorMessage = find("#register-password-error").text().trim()
+    errorMessage = find(".password-error").text().trim()
     equal(errorMessage, "")
 
 test "Trying to register a user with an already existing password displays an error on registration screen", ->

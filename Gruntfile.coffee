@@ -13,10 +13,12 @@ module.exports = (grunt) ->
         files:
           'overture/static/overture/js/app.min.js': [
             'overture/static/overture/coffee/app.coffee'
+            'overture/static/overture/coffee/mixins/*.coffee'
             'overture/static/overture/coffee/routes/*.coffee'
             'overture/static/overture/coffee/routes/examples/*.coffee'
             'overture/static/overture/coffee/controllers/*.coffee'
             'overture/static/overture/coffee/views/*.coffee'
+            'overture/static/overture/coffee/components/*.coffee'
             'overture/static/overture/coffee/models/*.coffee'
           ]
           'overture/static/overture/js/tests/tests.min.js': 'overture/static/overture/coffee/tests/*.coffee'

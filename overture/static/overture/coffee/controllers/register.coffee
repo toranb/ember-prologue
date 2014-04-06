@@ -1,23 +1,24 @@
-App.RegisterController = Ember.ObjectController.extend
+App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
   username: null
   first_name: null
   last_name: null
   email: null
   password: null
   password2: null
-  passwordError: null
   errors: null
+  success: null
+  passwordFieldValue: 'password'
 
-  getValue: (formField) ->
-    passwordValue = @get('password')
-    password2Value = @get(formField)
-    if passwordValue != password2Value
-      @set('passwordError', 'Passwords do not match.')
-    else
-      @set('passwordError', '')
-
-  validatePassword: ->
-    @getValue('password2')
+  resetVars: ->
+    @setProperties
+      username: null
+      first_name: null
+      last_name: null
+      email: null
+      password: null
+      password2: null
+      errors: null
+      success: null
 
   actions:
     createUser: ->
@@ -27,9 +28,12 @@ App.RegisterController = Ember.ObjectController.extend
         url: "/api/users/"
         data: data
         dataType: "json"
-      ).done((response) ->
-        Ember.run ->
-          console.log('We should have a new user now')
+      ).done((response) =>
+        Ember.run =>
+          @resetVars()
+          @set('success', 'Registration was successful!')
       ).fail (jqXHR, status, error) =>
         Ember.run =>
+          @resetVars()
           @set('errors', $.parseJSON(jqXHR.responseText))
+)

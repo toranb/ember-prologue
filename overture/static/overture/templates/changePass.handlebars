@@ -21,8 +21,8 @@
   {{input id='change-pass-old-password' class='form-control' value=current_password type='password' placeholder='Old Password'}}
   {{input id='change-pass-new-password' class='form-control' value=password1 type='password' placeholder='New Password'}}
   <span {{bind-attr class="passwordError:has-error"}}>
-    {{view App.ChangePasswordConfirmField id="change-pass-new-password2" class='form-control' value=password2 type='password' placeholder='Re-Enter New Password'}}
-    <span id="change-pass-password-error" {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
+    {{view App.PasswordConfirmField id="change-pass-new-password2" class='form-control' value=password2 type='password' placeholder='Re-Enter New Password'}}
+    <span {{bind-attr class="passwordError:password-error :help-block"}}>{{passwordError}}</span>
   </span>
   {{input id='register-submit-btn' class='btn btn-lg btn-success col-xs-12' type='submit' value='Update Password'}}
 </form>
