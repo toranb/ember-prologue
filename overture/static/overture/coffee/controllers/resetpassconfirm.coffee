@@ -1,4 +1,4 @@
-App.ResetPassConfirmController = Ember.ObjectController.extend
+App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
   password1: null
   password2: null
   key: null
@@ -29,3 +29,4 @@ App.ResetPassConfirmController = Ember.ObjectController.extend
         Ember.run =>
           @resetVars()
           @set('errors', $.parseJSON(jqXHR.responseText))
+)
