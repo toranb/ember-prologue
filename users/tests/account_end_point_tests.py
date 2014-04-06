@@ -60,7 +60,7 @@ class AccountEndPointRcoverPasswordTest(TestCase):
     def test_email_is_sent_when_valid_email_address_is_used_to_request_password_change(self):
         response = self.client.post(reverse('account:password_reset'), data={"email": "tester@testing.com"})
         response_json = json.loads(response.content)
-        expected_response = "We just sent you the link with which you will able to reset your password at tester@testing.com"
+        expected_response = "An email containing instructions to reset your password has been sent to tester@testing.com"
         reset_keys = PasswordReset.objects.all()
         self.assertEquals(len(reset_keys), 1)
         self.assertEqual(len(mail.outbox), 1)

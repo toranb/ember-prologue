@@ -89,7 +89,7 @@ class PasswordResetRequestKey(generics.GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({
-                'detail': 'We just sent you the link with which you will able to reset your password at {}'.format(request.DATA.get('email'))
+                'detail': 'An email containing instructions to reset your password has been sent to {}'.format(request.DATA.get('email'))
             })
         return Response(serializer.errors, status=400)
 
