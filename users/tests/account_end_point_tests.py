@@ -86,8 +86,14 @@ class AccountEndPointPasswordRestEmailLinkTest(TestCase):
         self.user = User.objects.create_user(username='testUser', email='tester@testing.com', password='securepass')
         self.reset_url = self.request_password_reset_and_extract_link_from_email()
 
+    def test_correct_url_is_emailed_to_user_requesting_a_password_reset(self):
+        # The full reset key will be different every time this is called but is tested in the following two tests
+        self.assertEqual(self.reset_url[:43], "http://example.com/#/resetpassconfirm/1-3qj")
+
     def test_user_is_able_to_set_new_password_with_link_received_in_email_when_new_password_requested(self):
-        response = self.client.post(self.reset_url, data={"current_password": "securepass", "password1": "newPass", "password2": "newPass"})
+        uidb36 = self.reset_url[38:43]
+        key = self.reset_url[44:]
+        response = self.client.post(reverse("account:password_reset_key", kwargs={"uidb36": uidb36, "key": key}), data={"current_password": "securepass", "password1": "newPass", "password2": "newPass"})
         response_json = json.loads(response.content)
         self.assertEqual(response_json['detail'], "Password successfully changed.")
         users_token = Token.objects.get(user_id=self.user.pk)
@@ -97,11 +103,13 @@ class AccountEndPointPasswordRestEmailLinkTest(TestCase):
         self.assertEqual(expected_response, response.content[1:-1])
 
     def test_user_receives_an_error_message_when_the_same_password_is_not_entered_twice_on_the_reset_screen(self):
-        response = self.client.post(self.reset_url, data={"current_password": "securepass", "password1": "newPass", "password2": "newPasszz"})
+        uidb36 = self.reset_url[38:43]
+        key = self.reset_url[44:]
+        response = self.client.post(reverse("account:password_reset_key", kwargs={"uidb36": uidb36, "key": key}), data={"current_password": "securepass", "password1": "newPass", "password2": "XnewPassX"})
         response_json = json.loads(response.content)
         self.assertEquals(response_json['password2'][0], 'Password confirmation mismatch')
 
     def request_password_reset_and_extract_link_from_email(self):
         self.client.post(reverse('account:password_reset'), data={"email": "tester@testing.com"})
-        url_regex = re.compile(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
-        return url_regex.findall(mail.outbox[0].body)[0][0]
+        url_regex = re.compile(r'http://.*')
+        return url_regex.findall(mail.outbox[0].body)[0]

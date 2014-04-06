@@ -9,6 +9,11 @@
       <strong>Password:</strong> {{errors.password}}
     </div>
   {{/if}}
+  {{#if errors.detail}}
+    <div class='alert alert-danger registration-password-error'>
+      {{errors.detail}}
+    </div>
+  {{/if}}
 {{/if}}
 
 <h2>Register</h2>

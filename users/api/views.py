@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import exceptions
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.utils.http import base36_to_int
@@ -26,6 +27,25 @@ class UserViewSet(viewsets.ModelViewSet):
         if pk == 'current_user':
             return Response(UserSerializer(request.user).data)
         return super(UserViewSet, self).retrieve(request, pk)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.DATA, files=request.FILES)
+
+        if serializer.is_valid():
+            if self.check_if_existing_user_has_same_data(request):
+                return Response({'detail': 'That email address is already registered'}, status=status.HTTP_400_BAD_REQUEST)
+            self.pre_save(serializer.object)
+            self.object = serializer.save(force_insert=True)
+            self.post_save(self.object, created=True)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def check_if_existing_user_has_same_data(self, request):
+        user = User.objects.filter(email=request.DATA['email'])
+        if user:
+            return True
 
 
 class AccountPassword(generics.GenericAPIView):
