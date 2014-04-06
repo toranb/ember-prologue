@@ -18,9 +18,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    current_password = serializers.CharField(help_text='Current Password')
-    password1 = serializers.CharField(help_text='New Password')
-    password2 = serializers.CharField(help_text='New Password (confirmation)')
+    current_password = serializers.CharField()
+    password1 = serializers.CharField()
+    password2 = serializers.CharField()
 
     def validate_current_password(self, attrs, source):
         if self.object.has_usable_password() and not self.object.check_password(attrs.get("current_password")):
@@ -59,13 +59,10 @@ class ResetPasswordSerializer(serializers.Serializer):
 
 
 class ResetPasswordKeySerializer(serializers.Serializer):
-    password1 = serializers.CharField(help_text='New Password')
-    password2 = serializers.CharField(help_text='New Password (confirmation)')
+    password1 = serializers.CharField()
+    password2 = serializers.CharField()
 
     def validate_password2(self, attrs, source):
-        """
-        password2 check
-        """
         password_confirmation = attrs[source]
         password = attrs['password1']
         if password_confirmation != password:

@@ -52,17 +52,16 @@ class AccountPassword(generics.GenericAPIView):
     """
     Change password of the current user.
 
-    Accepted parameters:
-     * current_password
-     * password1
-     * password2
+    @PARAMETERS
+     - current_password
+     - password1
+     - password2
     """
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
 
     def post(self, request, format=None):
-        """ validate password change operation and return result """
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data=request.DATA, instance=request.user)
         if serializer.is_valid():
@@ -73,10 +72,10 @@ class AccountPassword(generics.GenericAPIView):
 
 class PasswordResetRequestKey(generics.GenericAPIView):
     """
-    Sends an email to the user email address with a link to reset his password.
+    Sends an email to the user email address with a link to reset password.
 
-    Accepted parameters:
-     * email
+    @PARAMETERS:
+     - email
     """
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsNotAuthenticated,)
@@ -85,12 +84,10 @@ class PasswordResetRequestKey(generics.GenericAPIView):
     def post(self, request, format=None):
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data=request.DATA)
-        # serializer = self.serializer_class(data=request.DATA)
         if serializer.is_valid():
             serializer.save()
-            return Response({
-                'detail': 'An email containing instructions to reset your password has been sent to {}'.format(request.DATA.get('email'))
-            })
+            response = {'detail': 'An email containing instructions to reset your password has been sent to {}'.format(request.DATA.get('email'))}
+            return Response(response)
         return Response(serializer.errors, status=400)
 
     def permission_denied(self, request):
@@ -102,11 +99,10 @@ class PasswordResetFromKey(generics.GenericAPIView):
     Reset password from key.
 
     The key must be part of the URL!
-    Accepted parameters:
-     * password1
-     * password2
+    @PARAMETERS:
+     - password1
+     - password2
     """
-
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsNotAuthenticated,)
     serializer_class = ResetPasswordKeySerializer
@@ -117,10 +113,7 @@ class PasswordResetFromKey(generics.GenericAPIView):
             password_reset_key = PasswordReset.objects.get(user_id=uid_int, temp_key=key, reset=False)
         except (ValueError, PasswordReset.DoesNotExist, AttributeError):
             return Response({'errors': 'Key Not Found'}, status=404)
-        serializer = ResetPasswordKeySerializer(
-            data=request.DATA,
-            instance=password_reset_key
-        )
+        serializer = ResetPasswordKeySerializer(data=request.DATA, instance=password_reset_key)
         if serializer.is_valid():
             serializer.save()
             return Response({'detail': 'Password successfully changed.'})

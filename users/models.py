@@ -48,15 +48,12 @@ class PasswordResetManager(models.Manager):
 
 
 class PasswordReset(models.Model):
-    """
-    Password reset Key
-    """
+    """ Password reset Key """
     user = models.ForeignKey(User, verbose_name="user")
     email = models.EmailField(max_length=75)
     temp_key = models.CharField("temp_key", max_length=100)
     timestamp = models.DateTimeField("timestamp", default=datetime.utcnow().replace(tzinfo=utc))
     reset = models.BooleanField("reset yet?", default=False)
-
     objects = PasswordResetManager()
 
     class Meta:
