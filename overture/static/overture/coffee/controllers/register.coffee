@@ -9,7 +9,7 @@ App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
   success: null
   passwordFieldValue: 'password'
 
-  resetVars: ->
+  resetForm: ->
     @setProperties
       username: null
       first_name: null
@@ -30,11 +30,11 @@ App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
         dataType: "json"
       ).done((response) =>
         Ember.run =>
-          @resetVars()
+          @resetForm()
           @set('success', 'Registration was successful!')
       ).fail (jqXHR, status, error) =>
         Ember.run =>
-          @resetVars()
+          @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")

@@ -3,7 +3,7 @@ App.ResetPassController = Ember.ObjectController.extend
   errors: []
   success: null
 
-  resetVars: ->
+  resetForm: ->
     @setProperties
       email: null
       errors: []
@@ -19,11 +19,11 @@ App.ResetPassController = Ember.ObjectController.extend
         dataType: 'json'
       ).done((response) =>
         Ember.run =>
-          @resetVars()
+          @resetForm()
           @set('success', response.detail)
       ).fail (jqXHR, status, error) =>
         Ember.run =>
-          @resetVars()
+          @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")

@@ -5,7 +5,7 @@ App.LoginController = Ember.ObjectController.extend
   errors: []
   attemptedTransition: null
 
-  reset: ->
+  resetForm: ->
     @setProperties
       username: null
       password: null
@@ -21,12 +21,12 @@ App.LoginController = Ember.ObjectController.extend
         dataType: "json"
       ).done((response) =>
         Ember.run =>
-          @reset()
+          @resetForm()
           @set('token', response.token)
           @getCurrentUser()
       ).fail (jqXHR, status, error) =>
         Ember.run =>
-          @reset()
+          @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
