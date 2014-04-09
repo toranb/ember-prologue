@@ -10,10 +10,10 @@
     "grunt-ember-template-compiler": "1.3.0",
     "grunt-karma": "*",
     "grunt-contrib-less": "*",
-    "karma": "0.12.0",
-    "karma-qunit": "*",
-    "karma-phantomjs-launcher": "*",
-    "karma-qunit-special-blend": "*",
+    "qunit-special-blend": "*",
+    "testem": "*",
+    "phantomjs": "*",
+    "grunt-contrib-testem": "*",
     "less": "*"
   },
   "scripts": {

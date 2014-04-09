@@ -3,7 +3,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks("grunt-contrib-coffee")
   grunt.loadNpmTasks("grunt-contrib-watch")
   grunt.loadNpmTasks("grunt-ember-template-compiler")
-  grunt.loadNpmTasks("grunt-karma")
+  grunt.loadNpmTasks('grunt-contrib-testem')
   grunt.loadNpmTasks("grunt-contrib-less")
   grunt.initConfig
     coffee:
@@ -42,9 +42,18 @@ module.exports = (grunt) ->
         ]
         tasks: ["build"]
 
-    karma:
-      unit:
-        configFile: "karma.conf.js"
+    testem:
+      basic:
+        src: [
+          "node_modules/qunit-special-blend/qunit-special-blend.js"
+          "overture/static/overture/js/lib/scripts.min.js"
+          "node_modules/qunit-special-blend/run-qunit-special-blend.js"
+        ]
+        options:
+          parallel: 2,
+          framework: "qunit",
+          launch_in_dev: ["PhantomJS"]
+          launch_in_ci: ["PhantomJS"]
 
     concat:
       dist:
@@ -92,4 +101,4 @@ module.exports = (grunt) ->
         dest: "overture/static/overture/js/lib/templates.min.js"
 
   grunt.task.registerTask("build", ["coffee", "emberhandlebars", "less:build", "concat:dist", "concat:css"])
-  grunt.task.registerTask("test", ["coffee", "emberhandlebars", "less:build", "concat:test", "concat:css", "karma"])
+  grunt.task.registerTask("test", ["coffee", "emberhandlebars", "less:build", "concat:test", "concat:css", "testem:basic"])
