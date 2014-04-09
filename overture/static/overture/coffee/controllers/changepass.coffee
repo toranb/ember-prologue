@@ -1,4 +1,4 @@
-App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
+App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixin, App.Ajax,
   current_password: null
   password1: null
   password2: null
@@ -16,18 +16,14 @@ App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixi
 
   actions:
     changePass: ->
-      data = @getProperties('current_password', 'password1', 'password2')
-      $.ajax(
+      @ajaxMixin
         type: "POST"
         url: "/api/account/password_change"
-        data: data
-        dataType: "json"
-      ).done((response) =>
-        Ember.run =>
+        data: @getProperties('current_password', 'password1', 'password2')
+        done: (response) =>
           @resetForm()
           @set('success', response.detail)
-      ).fail (jqXHR, status, error) =>
-        Ember.run =>
+        fail: (jqXHR, status, error) =>
           @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors

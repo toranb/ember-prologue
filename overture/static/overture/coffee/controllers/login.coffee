@@ -1,4 +1,4 @@
-App.LoginController = Ember.ObjectController.extend
+App.LoginController = Ember.ObjectController.extend(App.Ajax,
   username: null
   password: null
   token: null
@@ -13,36 +13,28 @@ App.LoginController = Ember.ObjectController.extend
 
   actions:
     login: ->
-      data = @getProperties('username', 'password')
-      $.ajax(
+      @ajaxMixin
         type: "POST"
         url: "/api-token-auth/"
-        data: data
-        dataType: "json"
-      ).done((response) =>
-        Ember.run =>
+        data: @getProperties('username', 'password')
+        done: (response) =>
           @resetForm()
           @set('token', response.token)
           @getCurrentUser()
-      ).fail (jqXHR, status, error) =>
-        Ember.run =>
+        fail: (jqXHR, status, error) =>
           @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 
   getCurrentUser: ->
-    $.ajax(
-      type: "GET"
+    @ajaxMixin
       url: "/api/users/current_user"
-      dataType: "json"
-    ).done((response) =>
-      Ember.run =>
+      done: (response) =>
         localStorage.setItem("overtureProjectCurrentUserID", response.id)
         @store.push('user', response)
         @preformTransition()
-    ).fail (jqXHR, status, error) ->
-      Ember.run ->
+      fail: (jqXHR, status, error) =>
         console.log(error)
 
   preformTransition: ->
@@ -69,3 +61,4 @@ App.LoginController = Ember.ObjectController.extend
     tokenIsEmpty = Ember.isEmpty(token)
     return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
   ).property('token')
+)

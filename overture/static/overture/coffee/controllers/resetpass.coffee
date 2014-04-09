@@ -1,4 +1,4 @@
-App.ResetPassController = Ember.ObjectController.extend
+App.ResetPassController = Ember.ObjectController.extend(App.Ajax,
   email: null
   errors: []
   success: null
@@ -11,19 +11,16 @@ App.ResetPassController = Ember.ObjectController.extend
 
   actions:
     requestReset: ->
-      data = @getProperties('email')
-      $.ajax(
+      @ajaxMixin
         type: "POST"
         url: "/api/account/password_reset"
-        data: data
-        dataType: 'json'
-      ).done((response) =>
-        Ember.run =>
+        data: @getProperties('email')
+        done: (response) =>
           @resetForm()
           @set('success', response.detail)
-      ).fail (jqXHR, status, error) =>
-        Ember.run =>
+        fail: (jqXHR, status, error) =>
           @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
+)

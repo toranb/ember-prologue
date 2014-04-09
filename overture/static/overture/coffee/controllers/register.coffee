@@ -1,4 +1,4 @@
-App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
+App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin, App.Ajax,
   username: null
   first_name: null
   last_name: null
@@ -22,18 +22,14 @@ App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
 
   actions:
     createUser: ->
-      data = @getProperties('username', 'first_name', 'last_name', 'email', 'password')
-      $.ajax(
+      @ajaxMixin
         type: "POST"
         url: "/api/users/"
-        data: data
-        dataType: "json"
-      ).done((response) =>
-        Ember.run =>
+        data: @getProperties('username', 'first_name', 'last_name', 'email', 'password')
+        done: (response) =>
           @resetForm()
           @set('success', 'Registration was successful!')
-      ).fail (jqXHR, status, error) =>
-        Ember.run =>
+        fail: (jqXHR, status, error) =>
           @resetForm()
           theErrors = $.parseJSON(jqXHR.responseText)
           for key, value of theErrors
