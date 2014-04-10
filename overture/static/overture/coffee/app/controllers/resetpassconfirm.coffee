@@ -1,28 +1,27 @@
-`import PasswordConfrimMixin from 'coffee/mixins/passwordConfirmMixin'`
-`import Ajax from 'coffee/mixins/ajaxMixin'`
+`import Ajax from 'js/app/mixins/ajax'`
+`import PasswordConfirmMixin from 'js/app/mixins/password-confirm'`
 
-ChangePassController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
-  current_password: null
+ResetPassConfirmController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
   password1: null
   password2: null
+  key: null
   errors: []
   success: null
 
   resetForm: ->
     @setProperties
-      current_password: null
       password1: null
       password2: null
-      passwordError: null
+      key: null
       errors: []
       success: null
 
   actions:
-    changePass: ->
+    resetConfrim: ->
       @ajaxMixin
         type: "POST"
-        url: "/api/account/password_change"
-        data: @getProperties('current_password', 'password1', 'password2')
+        url: "/api/account/password/reset/#{@get('key')}/"
+        data: @getProperties('password1', 'password2')
         done: (response) =>
           @resetForm()
           @set('success', response.detail)
@@ -33,4 +32,4 @@ ChangePassController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )
 
-`export default ChangePassController`
+`export default ResetPassConfirmController`

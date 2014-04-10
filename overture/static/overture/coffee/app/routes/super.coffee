@@ -1,4 +1,4 @@
-`import AuthenticatedRoute from 'coffee/routes/authenticated'`
+`import AuthenticatedRoute from 'js/app/routes/authenticated'`
 
 SuperRoute = AuthenticatedRoute.extend
   model: ->

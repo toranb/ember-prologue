@@ -1,5 +1,5 @@
-`import Application from 'coffee/app'`
-`import Router from 'coffee/routes/router'`
+`import Application from 'js/app/app'`
+`import Router from 'js/app/router'`
 
 startApp ->
   App = undefined

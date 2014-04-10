@@ -3,4 +3,7 @@
 db.sqlite3
 node_modules/*
 overture/static/overture/js/*
+overture/static/overture/vendor/*
+!overture/static/overture/vendor/ember-resolver.js
+!overture/static/overture/vendor/loader.js
 overture/static/overture/css/*

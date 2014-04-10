@@ -13,9 +13,9 @@ module.exports = (grunt) ->
         bare: true
       glob_to_multiple:
         expand: true
-        cwd: 'overture/static/overture/coffee/tests'
-        src: ['**/*.coffee']
-        dest: 'overture/static/overture/js/tests'
+        cwd: 'overture/static/overture/coffee'
+        src: ['app/**/*.coffee', 'tests/*.coffee']
+        dest: 'overture/static/overture/js'
         ext: '.js'
 
     less:
@@ -29,21 +29,23 @@ module.exports = (grunt) ->
       tests:
         type: 'amd',
         moduleName: (path) ->
-          return grunt.config.process('overture/static/overture/js/tests') + path
-        files:
+          'js/tests/' + path
+        files: [
           expand: true
-          cwd: 'overture/static/overture/js/tests'
-          src: '**/*.js'
-          dest: 'overture/static/overture/js/dist/transpiled/tests'
+          cwd: 'overture/static/overture/js/tests/'
+          src: ['**/*.js']
+          dest: 'overture/static/overture/dist/transpiled/tests'
+        ]
       app:
         type: 'amd'
         moduleName: (path) ->
-          return grunt.config.process('overture/static/overture/js') + path
-        files:
+          'js/' + path
+        files: [
           expand: true
-          cwd: 'overture/static/overture/js'
-          src: '**/*.js'
-          dest: 'overture/static/overture/js/dist/transpiled/app'
+          cwd: 'overture/static/overture/js/app/'
+          src: ['**/*.js']
+          dest: 'overture/static/overture/dist/transpiled/app'
+        ]
 
     watch:
       options:
@@ -73,27 +75,29 @@ module.exports = (grunt) ->
     concat:
       dist:
         src: [
-          "overture/static/overture/js/vendor/jquery/dist/jquery.min.js"
-          "overture/static/overture/js/vendor/handlebars/handlebars.js"
-          "overture/static/overture/js/vendor/ember/ember.js"
-          "overture/static/overture/js/vendor/ember-data/ember-data.js"
-          "overture/static/overture/js/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
-          "overture/static/overture/js/dist/transpiled/app/**/*.js"
+          "overture/static/overture/vendor/jquery/dist/jquery.min.js"
+          "overture/static/overture/vendor/handlebars/handlebars.js"
+          "overture/static/overture/vendor/ember/ember.js"
+          "overture/static/overture/vendor/loader.js"
+          "overture/static/overture/vendor/ember-resolver.js"
+          "overture/static/overture/vendor/ember-data/ember-data.js"
+          "overture/static/overture/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
+          "overture/static/overture/dist/transpiled/app/**/*.js"
           "overture/static/overture/js/lib/templates.min.js"
         ]
         dest: "overture/static/overture/js/lib/scripts.min.js"
 
       test:
         src: [
-          "overture/static/overture/js/vendor/jquery/dist/jquery.min.js"
-          "overture/static/overture/js/vendor/handlebars/handlebars.js"
-          "overture/static/overture/js/vendor/ember/ember.js"
-          "overture/static/overture/js/vendor/ember-data/ember-data.js"
-          "overture/static/overture/js/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
-          "overture/static/overture/js/vendor/jquery-mockjax/jquery.mockjax.js"
-          "overture/static/overture/js/dist/transpiled/app/**/*.js"
+          "overture/static/overture/vendor/jquery/dist/jquery.min.js"
+          "overture/static/overture/vendor/handlebars/handlebars.js"
+          "overture/static/overture/vendor/ember/ember.js"
+          "overture/static/overture/vendor/ember-data/ember-data.js"
+          "overture/static/overture/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
+          "overture/static/overture/vendor/jquery-mockjax/jquery.mockjax.js"
+          "overture/static/overture/dist/transpiled/app/**/*.js"
           "overture/static/overture/js/lib/templates.min.js"
-          "overture/static/overture/js/dist/transpiled/tests/**/*.js"
+          "overture/static/overture/dist/transpiled/tests/*.js"
         ]
         dest: "overture/static/overture/js/lib/scripts.min.js"
 
@@ -116,4 +120,4 @@ module.exports = (grunt) ->
         dest: "overture/static/overture/js/lib/templates.min.js"
 
   grunt.task.registerTask("build", ["coffee", 'transpile:app', "emberhandlebars", "less:build", "concat:dist", "concat:css"])
-  grunt.task.registerTask("test", ["coffee", 'transpile:tests', "emberhandlebars", "less:build", "concat:test", "concat:css", "testem:basic"])
+  grunt.task.registerTask("test", ["coffee", 'transpile:tests', 'transpile:app', "emberhandlebars", "less:build", "concat:test", "concat:css", "testem:basic"])

@@ -1,4 +1,4 @@
-`import Ajax from 'coffee/mixins/ajaxMixin'`
+`import Ajax from 'js/app/mixins/ajax'`
 
 LoginController = Ember.ObjectController.extend(Ajax,
   username: null

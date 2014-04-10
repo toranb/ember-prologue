@@ -1,4 +1,4 @@
 {
-  "directory": "overture/static/overture/js/vendor",
+  "directory": "overture/static/overture/vendor",
   "json": "bower.json"
 }

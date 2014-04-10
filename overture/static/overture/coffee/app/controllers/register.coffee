@@ -1,4 +1,7 @@
-App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin, App.Ajax,
+`import PasswordConfirmMixin from 'js/app/mixins/password-confrim'`
+`import Ajax from 'js/app/mixins/ajax'`
+
+RegisterController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
   username: null
   first_name: null
   last_name: null
@@ -35,3 +38,5 @@ App.RegisterController = Ember.ObjectController.extend(App.PasswordConfirmMixin,
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )
+
+`export default RegisterController`

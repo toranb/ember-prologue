@@ -1,3 +1,5 @@
+Router = Ember.Router.extend()
+
 Router.map ->
   @route("login", {path: "/login"})
   @route("public", {path: "/public"})
