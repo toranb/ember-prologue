@@ -1,4 +1,4 @@
-App.PasswordConfirmMixin = Ember.Mixin.create
+PasswordConfirmMixin = Ember.Mixin.create
   passwordError: null
   passwordFieldValue: 'password1'
 
@@ -9,3 +9,5 @@ App.PasswordConfirmMixin = Ember.Mixin.create
       @set('passwordError', 'Passwords do not match.')
     else
       @set('passwordError', '')
+
+`export default PasswordConfirmMixin`

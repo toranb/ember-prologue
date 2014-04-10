@@ -1,4 +1,7 @@
-App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfirmMixin, App.Ajax,
+`import Ajax from 'coffee/mixins/ajaxMixin'`
+`import PasswordConfirmMixin from 'coffee/mixins/passwordConfirmMixin'`
+
+ResetPassConfirmController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
   password1: null
   password2: null
   key: null
@@ -28,3 +31,5 @@ App.ResetPassConfirmController = Ember.ObjectController.extend(App.PasswordConfi
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )
+
+`export default ResetPassConfirmController`

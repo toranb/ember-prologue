@@ -2,26 +2,21 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks("grunt-contrib-concat")
   grunt.loadNpmTasks("grunt-contrib-coffee")
   grunt.loadNpmTasks("grunt-contrib-watch")
+  grunt.loadNpmTasks('grunt-es6-module-transpiler')
   grunt.loadNpmTasks("grunt-ember-template-compiler")
   grunt.loadNpmTasks('grunt-contrib-testem')
   grunt.loadNpmTasks("grunt-contrib-less")
   grunt.initConfig
+  
     coffee:
       options:
         bare: true
-      compile:
-        files:
-          'overture/static/overture/js/app.min.js': [
-            'overture/static/overture/coffee/app.coffee'
-            'overture/static/overture/coffee/mixins/*.coffee'
-            'overture/static/overture/coffee/routes/*.coffee'
-            'overture/static/overture/coffee/routes/examples/*.coffee'
-            'overture/static/overture/coffee/controllers/*.coffee'
-            'overture/static/overture/coffee/views/*.coffee'
-            'overture/static/overture/coffee/components/*.coffee'
-            'overture/static/overture/coffee/models/*.coffee'
-          ]
-          'overture/static/overture/js/tests/tests.min.js': 'overture/static/overture/coffee/tests/*.coffee'
+      glob_to_multiple:
+        expand: true
+        cwd: 'overture/static/overture/coffee/tests'
+        src: ['**/*.coffee']
+        dest: 'overture/static/overture/js/tests'
+        ext: '.js'
 
     less:
       build:
@@ -29,6 +24,26 @@ module.exports = (grunt) ->
           "overture/static/overture/css/navbar.css": "overture/static/overture/less/navbar.less"
           "overture/static/overture/css/authentication.css": "overture/static/overture/less/authentication.less"
           "overture/static/overture/css/overture.css": "overture/static/overture/less/overture.less"
+
+    transpile:
+      tests:
+        type: 'amd',
+        moduleName: (path) ->
+          return grunt.config.process('overture/static/overture/js/tests') + path
+        files:
+          expand: true
+          cwd: 'overture/static/overture/js/tests'
+          src: '**/*.js'
+          dest: 'overture/static/overture/js/dist/transpiled/tests'
+      app:
+        type: 'amd'
+        moduleName: (path) ->
+          return grunt.config.process('overture/static/overture/js') + path
+        files:
+          expand: true
+          cwd: 'overture/static/overture/js'
+          src: '**/*.js'
+          dest: 'overture/static/overture/js/dist/transpiled/app'
 
     watch:
       options:
@@ -63,7 +78,7 @@ module.exports = (grunt) ->
           "overture/static/overture/js/vendor/ember/ember.js"
           "overture/static/overture/js/vendor/ember-data/ember-data.js"
           "overture/static/overture/js/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
-          "overture/static/overture/js/app.min.js"
+          "overture/static/overture/js/dist/transpiled/app/**/*.js"
           "overture/static/overture/js/lib/templates.min.js"
         ]
         dest: "overture/static/overture/js/lib/scripts.min.js"
@@ -76,9 +91,9 @@ module.exports = (grunt) ->
           "overture/static/overture/js/vendor/ember-data/ember-data.js"
           "overture/static/overture/js/vendor/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.min.js"
           "overture/static/overture/js/vendor/jquery-mockjax/jquery.mockjax.js"
-          "overture/static/overture/js/app.min.js"
+          "overture/static/overture/js/dist/transpiled/app/**/*.js"
           "overture/static/overture/js/lib/templates.min.js"
-          "overture/static/overture/js/tests/tests.min.js"
+          "overture/static/overture/js/dist/transpiled/tests/**/*.js"
         ]
         dest: "overture/static/overture/js/lib/scripts.min.js"
 
@@ -100,5 +115,5 @@ module.exports = (grunt) ->
         files: ["overture/static/overture/templates/*.handlebars"]
         dest: "overture/static/overture/js/lib/templates.min.js"
 
-  grunt.task.registerTask("build", ["coffee", "emberhandlebars", "less:build", "concat:dist", "concat:css"])
-  grunt.task.registerTask("test", ["coffee", "emberhandlebars", "less:build", "concat:test", "concat:css", "testem:basic"])
+  grunt.task.registerTask("build", ["coffee", 'transpile:app', "emberhandlebars", "less:build", "concat:dist", "concat:css"])
+  grunt.task.registerTask("test", ["coffee", 'transpile:tests', "emberhandlebars", "less:build", "concat:test", "concat:css", "testem:basic"])

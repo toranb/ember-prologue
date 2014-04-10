@@ -8,6 +8,7 @@
     "grunt-contrib-concat": "*",
     "grunt-contrib-watch": "*",
     "grunt-ember-template-compiler": "1.3.0",
+    "grunt-es6-module-transpiler": "*",
     "grunt-karma": "*",
     "grunt-contrib-less": "*",
     "qunit-special-blend": "*",

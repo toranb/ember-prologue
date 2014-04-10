@@ -1,4 +1,7 @@
-App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixin, App.Ajax,
+`import PasswordConfrimMixin from 'coffee/mixins/passwordConfirmMixin'`
+`import Ajax from 'coffee/mixins/ajaxMixin'`
+
+ChangePassController = Ember.ObjectController.extend(PasswordConfirmMixin, Ajax,
   current_password: null
   password1: null
   password2: null
@@ -29,3 +32,5 @@ App.ChangePassController = Ember.ObjectController.extend(App.PasswordConfirmMixi
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )
+
+`export default ChangePassController`

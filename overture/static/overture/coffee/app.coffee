@@ -1,11 +1,9 @@
-# -- The APP --
-window.App = Ember.Application.create(
-  # Basic logging, e.g. "Transitioned into 'post'"
-  LOG_TRANSITIONS: false
+`import Resolver from 'ember/resolver'`
 
-  # Extremely detailed logging, highlighting every internal
-  # step made while transitioning into a route, including
-  # `beforeModel`, `model`, and `afterModel` hooks, and
-  # information about redirects and aborted transitions
+App = Ember.Application.extend
+  modulePrefix: 'js',
+  Resolver: Resolver['default']
+  LOG_TRANSITIONS: false
   LOG_TRANSITIONS_INTERNAL: false
-)
+
+`export default App`

@@ -1,4 +1,4 @@
-App.AuthenticatedRoute = Ember.Route.extend
+AuthenticatedRoute = Ember.Route.extend
   beforeModel: (transition) ->
     if not @controllerFor('login').get('hasToken')
       @redirectToLogin(transition)
@@ -12,3 +12,5 @@ App.AuthenticatedRoute = Ember.Route.extend
     error: (error, transition) ->
       console.log("Error status: #{error.status}")
       @redirectToLogin(transition)
+
+`export default AuthenticatedRoute`

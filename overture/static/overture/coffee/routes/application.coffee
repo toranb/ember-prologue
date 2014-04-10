@@ -1,4 +1,4 @@
-App.ApplicationRoute = Ember.Route.extend
+ApplicationRoute = Ember.Route.extend
   init: ->
     # Remembered user if they close their browser
     @_super()
@@ -13,3 +13,5 @@ App.ApplicationRoute = Ember.Route.extend
         @controllerFor("application").set("mobileMenuVisible", false)
         @controllerFor("application").pushBody()
       @transitionTo("index")
+
+`export default ApplicationRoute`

@@ -1,6 +1,5 @@
 module "Registration tests",
   setup: ->
-    App.reset()
   teardown: ->
     $.mockjaxClear()
 

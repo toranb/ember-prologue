@@ -4,7 +4,6 @@
 
 module "Example route tests",
   setup: ->
-    App.reset()
     @tokenResponse = {token: "dcfe0537f11aa142d740217b18c13651b73866ec"}
     @user1 = {id: 1, username: "jrock", first_name: "Jarrod", last_name: "Taylor", email: "jarrod@gmail.com"}
   teardown: ->

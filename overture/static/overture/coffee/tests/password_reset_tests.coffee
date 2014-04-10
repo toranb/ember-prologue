@@ -1,6 +1,5 @@
 module "Password reset tests",
   setup: ->
-    App.reset()
   teardown: ->
     $.mockjaxClear()
 

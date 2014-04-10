@@ -1,4 +1,4 @@
-App.ApplicationController = Ember.ObjectController.extend
+ApplicationController = Ember.ObjectController.extend
   mobileMenuVisible: false
   needs: 'login'
   actions:
@@ -8,3 +8,5 @@ App.ApplicationController = Ember.ObjectController.extend
 
   pushBody: ->
     $('body').toggleClass("push-mobile-nav-right")
+
+`export default ApplicationController`

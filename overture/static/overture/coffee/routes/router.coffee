@@ -1,4 +1,4 @@
-App.Router.map ->
+Router.map ->
   @route("login", {path: "/login"})
   @route("public", {path: "/public"})
   @route("registered", {path: "/registered"})
@@ -7,3 +7,5 @@ App.Router.map ->
   @route("resetPass", {path: "/resetpass"})
   @route("resetPassConfirm", {path: "/resetpassconfirm/:reset_key"})
   @route("changePass", {path: "/changepass"})
+
+`export default Router`

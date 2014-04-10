@@ -1,4 +1,6 @@
-App.ResetPassController = Ember.ObjectController.extend(App.Ajax,
+`import Ajax from 'coffee/mixins/ajaxMixin'`
+
+ResetPassController = Ember.ObjectController.extend(Ajax,
   email: null
   errors: []
   success: null
@@ -24,3 +26,5 @@ App.ResetPassController = Ember.ObjectController.extend(App.Ajax,
           for key, value of theErrors
             @errors.pushObject("#{key.charAt(0).toUpperCase() + key.substring(1)}: #{value}")
 )
+
+`export default ResetPassController`

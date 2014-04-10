@@ -1,4 +1,6 @@
-App.LoginController = Ember.ObjectController.extend(App.Ajax,
+`import Ajax from 'coffee/mixins/ajaxMixin'`
+
+LoginController = Ember.ObjectController.extend(Ajax,
   username: null
   password: null
   token: null
@@ -34,7 +36,7 @@ App.LoginController = Ember.ObjectController.extend(App.Ajax,
         localStorage.setItem("overtureProjectCurrentUserID", response.id)
         @store.push('user', response)
         @preformTransition()
-      fail: (jqXHR, status, error) =>
+      fail: (jqXHR, status, error) ->
         console.log(error)
 
   preformTransition: ->
@@ -62,3 +64,5 @@ App.LoginController = Ember.ObjectController.extend(App.Ajax,
     return not tokenIsEmpty and token isnt "null" and token isnt "undefined"
   ).property('token')
 )
+
+`export default LoginController`

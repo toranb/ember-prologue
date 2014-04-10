@@ -1,12 +1,21 @@
-document.write """<div id=\"ember-testing-container\">
-<div id=\"ember-testing\"></div>
-</div>"""
+`import Application from 'coffee/app'`
+`import Router from 'coffee/routes/router'`
 
-# Allow us to see the app running inside the QUnit test runner
-App.rootElement = "#ember-testing"
+startApp ->
+  App = undefined
+  attributes
+    rootElement: "#ember-testing"
+    LOG_ACTIVE_GENERATION: false
+    LOG_VIEW_LOOKUPS: false
+  Router.reopen
+    location: "none"
+  Ember.run ->
+    App = Application.create(attributes)
+    App.setupForTesting()
+    App.injectTestHelpers()
+    return
 
-# Defer the readiness of the application, so we start when tests are ready
-App.setupForTesting()
+  App.reset()
+  return App
 
-# Inject the test helper in the window's scope
-App.injectTestHelpers()
+`export default startApp`
